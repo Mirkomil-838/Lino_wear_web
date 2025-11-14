@@ -105,7 +105,15 @@
 
         .logo-img {
             height: 60px;
-            width: auto;
+            width: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
             filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
             animation: logoGlow 3s ease-in-out infinite alternate;
         }
@@ -733,6 +741,32 @@
             }
         }
 
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .hero h1 {
@@ -755,6 +789,10 @@
             
             .nav-links {
                 display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
             }
             
             .hero-content {
@@ -815,7 +853,7 @@
         <div class="container">
             <nav class="navbar">
                 <div class="logo">
-                    <img src="logo.jpeg" alt="Lion Wear Logo" class="logo-img" style="border-radius: 50%;">
+                      <img src="logo.jpeg" alt="Lion Wear Logo" class="logo-img" style="border-radius: 50%;">
                     <h1>LION WEAR</h1>
                 </div>
                 <div class="nav-links">
@@ -824,6 +862,9 @@
                     <a href="#features">Afzalliklar</a>
                     <a href="#contact">Aloqa</a>
                 </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <a href="https://t.me/lino_wear_bot" class="cta-button">
                     <i class="fab fa-telegram"></i>
                     Botga Kirish
@@ -1013,7 +1054,7 @@
     </footer>
 
     <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     
     <script>
         // Preloader
@@ -1107,15 +1148,15 @@
             observer.observe(el);
         });
 
-        // Mouse move parallax effect
-        document.addEventListener('mousemove', function(e) {
-            const floatingProducts = document.querySelector('.floating-products');
-            if (floatingProducts) {
-                const x = (e.clientX / window.innerWidth - 0.5) * 20;
-                const y = (e.clientY / window.innerHeight - 0.5) * 20;
-                floatingProducts.style.transform = `translateY(-50%) translateX(${x}px) translateY(${y}px)`;
-            }
-        });
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
 
         // Add ripple effect to buttons
         document.querySelectorAll('.cta-button, .secondary-button, .cta-button-large').forEach(button => {
@@ -1138,26 +1179,6 @@
                 }, 600);
             });
         });
-
-        // Add CSS for ripple effect
-        const style = document.createElement('style');
-        style.textContent = `
-            .ripple {
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.6);
-                transform: scale(0);
-                animation: ripple-animation 0.6s linear;
-            }
-            
-            @keyframes ripple-animation {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
